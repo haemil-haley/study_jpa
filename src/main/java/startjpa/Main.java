@@ -16,13 +16,10 @@ public class Main {
 
         try {
             // code
-            Users user = new Users();
-            user.setId(2L);
-            user.setName("User B");
+            Users findUser = em.find(Users.class, 1L);
+            findUser.setName("Change Name A");
 
-            em.persist(user);
-
-            tx.commit();
+            tx.commit();    // 다른 코드 없이도, 변경이 일어나면 감지 하여 업데이트 됨.
         } catch (Exception e) {
             tx.rollback();
         } finally {
