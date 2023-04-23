@@ -8,21 +8,26 @@ import javax.persistence.Persistence;
 public class Main {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("start");
+
         EntityManager em = emf.createEntityManager();
 
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        // code
-        Users user = new Users();
-        user.setId(1L);
-        user.setName("User A");
+        try {
+            // code
+            Users user = new Users();
+            user.setId(2L);
+            user.setName("User B");
 
-        em.persist(user);
+            em.persist(user);
 
-        tx.commit();
-
-        em.close();
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        } finally {
+            em.close();
+        }
         emf.close();
     }
 }
